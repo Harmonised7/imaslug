@@ -1,1 +1,1 @@
-Press V by default to become a make-shift slug!
+Press C by default to become a make-shift slug!

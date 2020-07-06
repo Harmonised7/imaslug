@@ -2,11 +2,11 @@ modLoader="javafml"
        loaderVersion="[31.1,)"
 
        [[mods]]
-           modId="pmmo"
+           modId="imaslug"
            version="${file.jarVersion}"
            displayName="I'm a Slug"
            displayURL="https://www.curseforge.com/minecraft/mc-mods/imaslug"
-           credits="MMD were there when this mod needed them, including the start"
+           credits="Extracted from Project MMO as a standalone"
            authors="Harmonised"
            description='''
            Allows you to imitate a real life Slug, with the push of a single button!

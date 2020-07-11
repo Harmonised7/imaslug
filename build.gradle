@@ -16,14 +16,14 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
 
-version = '1.15-1.0'
+version = '1.16-1.0'
 group = 'harmonised.imaslug'
 archivesBaseName = 'I\'m a Slug'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200528-1.15.1'
+    mappings channel: 'snapshot', version: '20200707-1.16.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -95,13 +95,13 @@ repositories
 
 dependencies
 {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.5'
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.47'
     implementation 'com.google.code.gson:gson:2.8.6'
 
-    compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3")
+//    compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3:api")
+//    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3")
 
-    runtimeOnly fg.deobf("curse.maven:worldedit:2873556")
+//    runtimeOnly fg.deobf("curse.maven:worldedit:2873556")
 }
 
 jar {

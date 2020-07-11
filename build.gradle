@@ -16,9 +16,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
 
-version = '1.0'
+version = '1.15-1.0'
 group = 'harmonised.imaslug'
-archivesBaseName = 'I\'m a Slug-1.15'
+archivesBaseName = 'I\'m a Slug'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 

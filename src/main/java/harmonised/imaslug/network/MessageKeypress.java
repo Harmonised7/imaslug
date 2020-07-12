@@ -9,13 +9,13 @@ import java.util.function.Supplier;
 
 public class MessageKeypress
 {
-    int key;
+//    int key;
     boolean keyState;
 
-    public MessageKeypress( boolean keyState, int key )
+    public MessageKeypress( boolean keyState )
     {
         this.keyState = keyState;
-        this.key = key;
+//        this.key = key;
     }
 
     MessageKeypress()
@@ -26,7 +26,7 @@ public class MessageKeypress
     {
         MessageKeypress packet = new MessageKeypress();
         packet.keyState = buf.readBoolean();
-        packet.key = buf.readInt();
+//        packet.key = buf.readInt();
 
         return packet;
     }
@@ -34,7 +34,7 @@ public class MessageKeypress
     public static void encode(MessageKeypress packet, PacketBuffer buf )
     {
         buf.writeBoolean( packet.keyState );
-        buf.writeInt( packet.key );
+//        buf.writeInt( packet.key );
     }
 
     public static void handlePacket(MessageKeypress packet, Supplier<NetworkEvent.Context> ctx )
@@ -42,14 +42,10 @@ public class MessageKeypress
         ctx.get().enqueueWork(() ->
         {
             UUID playerUUID = ctx.get().getSender().getUniqueID();
-
-            if( packet.key == 0 )
-            {
-                if( packet.keyState )
-                    EventHandler.isCrawling.add( playerUUID );
-                else
-                    EventHandler.isCrawling.remove( playerUUID );
-            }
+            if( packet.keyState )
+                EventHandler.isCrawling.add( playerUUID );
+            else
+                EventHandler.isCrawling.remove( playerUUID );
         });
         ctx.get().setPacketHandled(true);
     }

@@ -6,6 +6,9 @@ import harmonised.imaslug.util.ClientHandler;
 import harmonised.imaslug.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Pose;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,7 +20,7 @@ import java.util.*;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler
 {
-    private static boolean wasCrawling = false, wasVeining = false, wasOpenMenu = false, wasOpenSettings = false, wasOpenSkills = false, wasOpenGlossary = false, tooltipKeyWasPressed = false;
+    private static boolean wasCrawling = false, wasCrawlingToggle = false, crawlToggled = false;
     public static Set<UUID> isCrawling = new HashSet<>();
 
     public static void subscribeClientEvents( IEventBus eventBus )
@@ -33,10 +36,23 @@ public class EventHandler
             if( wasCrawling != ClientHandler.CRAWL_KEY.isKeyDown() )
             {
                 wasCrawling = ClientHandler.CRAWL_KEY.isKeyDown();
-                NetworkHandler.sendToServer( new MessageKeypress( ClientHandler.CRAWL_KEY.isKeyDown(), 0 ) );
+                if( !wasCrawling )
+                    crawlToggled = false;
+                NetworkHandler.sendToServer( new MessageKeypress( ClientHandler.CRAWL_KEY.isKeyDown() ) );
             }
 
-            if( ClientHandler.CRAWL_KEY.isKeyDown() )
+            if( wasCrawlingToggle != ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown() )
+            {
+                wasCrawlingToggle = ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown();
+                if( wasCrawlingToggle )
+                {
+                    crawlToggled = !crawlToggled;
+                    if( ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown() )
+                        NetworkHandler.sendToServer( new MessageKeypress( crawlToggled ) );
+                }
+            }
+
+            if( ClientHandler.CRAWL_KEY.isKeyDown() || crawlToggled )
                 isCrawling.add( Minecraft.getInstance().player.getUniqueID() );
             else
                 isCrawling.remove( Minecraft.getInstance().player.getUniqueID() );

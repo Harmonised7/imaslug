@@ -7,6 +7,7 @@ modLoader="javafml"
            displayName="I'm a Slug"
            displayURL="https://www.curseforge.com/minecraft/mc-mods/imaslug"
            credits="Extracted from Project MMO as a standalone"
+           license="All rights reserved"
            authors="Harmonised"
            description='''
            Allows you to imitate a real life Slug, with the push of a single button!

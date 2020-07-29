@@ -13,10 +13,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 @Mod( Reference.MOD_ID )
 public class ImASlugMod
 {
     private static String PROTOCOL_VERSION = "1";
+    public static Set<UUID> isCrawling = new HashSet<>();
     public static SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
             .named( new ResourceLocation( Reference.MOD_ID, "main_channel" ) )
             .clientAcceptedVersions( PROTOCOL_VERSION::equals )

@@ -1,14 +1,12 @@
 package harmonised.imaslug.events;
 
+import harmonised.imaslug.ImASlugMod;
 import harmonised.imaslug.network.MessageKeypress;
 import harmonised.imaslug.network.NetworkHandler;
 import harmonised.imaslug.util.ClientHandler;
 import harmonised.imaslug.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Pose;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,15 +16,9 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class EventHandler
+public class ClientEventHandler
 {
     private static boolean wasCrawling = false, wasCrawlingToggle = false, crawlToggled = false;
-    public static Set<UUID> isCrawling = new HashSet<>();
-
-    public static void subscribeClientEvents( IEventBus eventBus )
-    {
-        eventBus.register( EventHandler.class );
-    }
 
     @SubscribeEvent
     public static void keyPressEvent( net.minecraftforge.client.event.InputEvent.KeyInputEvent event )
@@ -53,16 +45,17 @@ public class EventHandler
             }
 
             if( ClientHandler.CRAWL_KEY.isKeyDown() || crawlToggled )
-                isCrawling.add( Minecraft.getInstance().player.getUniqueID() );
+                ImASlugMod.isCrawling.add( Minecraft.getInstance().player.getUniqueID() );
             else
-                isCrawling.remove( Minecraft.getInstance().player.getUniqueID() );
+                ImASlugMod.isCrawling.remove( Minecraft.getInstance().player.getUniqueID() );
         }
     }
 
     @SubscribeEvent
     public static void playerTickEvent( TickEvent.PlayerTickEvent event )
     {
-        if( isCrawling.contains( event.player.getUniqueID() ) )
+        if( ImASlugMod.isCrawling.contains( event.player.getUniqueID() ) )
             event.player.setPose( Pose.SWIMMING );
+        System.out.println( event.player.getPose() );
     }
 }

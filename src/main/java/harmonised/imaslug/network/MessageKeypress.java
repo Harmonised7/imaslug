@@ -1,6 +1,7 @@
 package harmonised.imaslug.network;
 
-import harmonised.imaslug.events.EventHandler;
+import harmonised.imaslug.ImASlugMod;
+import harmonised.imaslug.events.ClientEventHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -43,9 +44,9 @@ public class MessageKeypress
         {
             UUID playerUUID = ctx.get().getSender().getUniqueID();
             if( packet.keyState )
-                EventHandler.isCrawling.add( playerUUID );
+                ImASlugMod.isCrawling.add( playerUUID );
             else
-                EventHandler.isCrawling.remove( playerUUID );
+                ImASlugMod.isCrawling.remove( playerUUID );
         });
         ctx.get().setPacketHandled(true);
     }

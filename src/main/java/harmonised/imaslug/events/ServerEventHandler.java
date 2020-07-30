@@ -23,6 +23,5 @@ public class ServerEventHandler
     {
         if( ImASlugMod.isCrawling.contains( event.player.getUniqueID() ) )
             event.player.setPose( Pose.SWIMMING );
-        System.out.println( event.player.getPose() );
     }
 }

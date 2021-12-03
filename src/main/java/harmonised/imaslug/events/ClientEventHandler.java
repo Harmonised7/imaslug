@@ -6,10 +6,9 @@ import harmonised.imaslug.network.NetworkHandler;
 import harmonised.imaslug.util.ClientHandler;
 import harmonised.imaslug.util.Reference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Pose;
+import net.minecraft.world.entity.Pose;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -21,40 +20,40 @@ public class ClientEventHandler
     private static boolean wasCrawling = false, wasCrawlingToggle = false, crawlToggled = false;
 
     @SubscribeEvent
-    public static void keyPressEvent( net.minecraftforge.client.event.InputEvent.KeyInputEvent event )
+    public static void keyPressEvent(net.minecraftforge.client.event.InputEvent.KeyInputEvent event)
     {
-        if( Minecraft.getInstance().player != null )
+        if(Minecraft.getInstance().player != null)
         {
-            if( wasCrawling != ClientHandler.CRAWL_KEY.isKeyDown() )
+            if(wasCrawling != ClientHandler.CRAWL_KEY.isDown())
             {
-                wasCrawling = ClientHandler.CRAWL_KEY.isKeyDown();
-                if( !wasCrawling )
+                wasCrawling = ClientHandler.CRAWL_KEY.isDown();
+                if(!wasCrawling)
                     crawlToggled = false;
-                NetworkHandler.sendToServer( new MessageKeypress( ClientHandler.CRAWL_KEY.isKeyDown() ) );
+                NetworkHandler.sendToServer(new MessageKeypress(ClientHandler.CRAWL_KEY.isDown()));
             }
 
-            if( wasCrawlingToggle != ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown() )
+            if(wasCrawlingToggle != ClientHandler.CRAWL_TOGGLE_KEY.isDown())
             {
-                wasCrawlingToggle = ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown();
-                if( wasCrawlingToggle )
+                wasCrawlingToggle = ClientHandler.CRAWL_TOGGLE_KEY.isDown();
+                if(wasCrawlingToggle)
                 {
                     crawlToggled = !crawlToggled;
-                    if( ClientHandler.CRAWL_TOGGLE_KEY.isKeyDown() )
-                        NetworkHandler.sendToServer( new MessageKeypress( crawlToggled ) );
+                    if(ClientHandler.CRAWL_TOGGLE_KEY.isDown())
+                        NetworkHandler.sendToServer(new MessageKeypress(crawlToggled));
                 }
             }
 
-            if( ClientHandler.CRAWL_KEY.isKeyDown() || crawlToggled )
-                ImASlugMod.isCrawling.add( Minecraft.getInstance().player.getUniqueID() );
+            if(ClientHandler.CRAWL_KEY.isDown() || crawlToggled)
+                ImASlugMod.isCrawling.add(Minecraft.getInstance().player.getUUID());
             else
-                ImASlugMod.isCrawling.remove( Minecraft.getInstance().player.getUniqueID() );
+                ImASlugMod.isCrawling.remove(Minecraft.getInstance().player.getUUID());
         }
     }
 
     @SubscribeEvent
-    public static void playerTickEvent( TickEvent.PlayerTickEvent event )
+    public static void playerTickEvent(TickEvent.PlayerTickEvent event)
     {
-        if( ImASlugMod.isCrawling.contains( event.player.getUniqueID() ) )
-            event.player.setPose( Pose.SWIMMING );
+        if(ImASlugMod.isCrawling.contains(event.player.getUUID()))
+            event.player.setPose(Pose.SWIMMING);
     }
 }

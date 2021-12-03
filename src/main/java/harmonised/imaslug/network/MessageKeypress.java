@@ -1,9 +1,8 @@
 package harmonised.imaslug.network;
 
 import harmonised.imaslug.ImASlugMod;
-import harmonised.imaslug.events.ClientEventHandler;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -13,7 +12,7 @@ public class MessageKeypress
 //    int key;
     boolean keyState;
 
-    public MessageKeypress( boolean keyState )
+    public MessageKeypress(boolean keyState)
     {
         this.keyState = keyState;
 //        this.key = key;
@@ -23,7 +22,7 @@ public class MessageKeypress
     {
     }
 
-    public static MessageKeypress decode(PacketBuffer buf )
+    public static MessageKeypress decode(FriendlyByteBuf buf)
     {
         MessageKeypress packet = new MessageKeypress();
         packet.keyState = buf.readBoolean();
@@ -32,21 +31,21 @@ public class MessageKeypress
         return packet;
     }
 
-    public static void encode(MessageKeypress packet, PacketBuffer buf )
+    public static void encode(MessageKeypress packet, FriendlyByteBuf buf)
     {
-        buf.writeBoolean( packet.keyState );
-//        buf.writeInt( packet.key );
+        buf.writeBoolean(packet.keyState);
+//        buf.writeInt(packet.key);
     }
 
-    public static void handlePacket(MessageKeypress packet, Supplier<NetworkEvent.Context> ctx )
+    public static void handlePacket(MessageKeypress packet, Supplier<NetworkEvent.Context> ctx)
     {
         ctx.get().enqueueWork(() ->
         {
-            UUID playerUUID = ctx.get().getSender().getUniqueID();
-            if( packet.keyState )
-                ImASlugMod.isCrawling.add( playerUUID );
+            UUID playerUUID = ctx.get().getSender().getUUID();
+            if(packet.keyState)
+                ImASlugMod.isCrawling.add(playerUUID);
             else
-                ImASlugMod.isCrawling.remove( playerUUID );
+                ImASlugMod.isCrawling.remove(playerUUID);
         });
         ctx.get().setPacketHandled(true);
     }

@@ -32,17 +32,12 @@ public class ImASlugMod
     public ImASlugMod()
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modsLoading);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoading);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::init);
     }
 
     private void modsLoading(FMLCommonSetupEvent event)
     {
         NetworkHandler.registerPackets();
         MinecraftForge.EVENT_BUS.register(ClientHandler.class);
-    }
-
-    private void clientLoading(FMLClientSetupEvent event)
-    {
-        ClientHandler.init();
     }
 }

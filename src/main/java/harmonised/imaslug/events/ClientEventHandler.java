@@ -8,6 +8,7 @@ import harmonised.imaslug.util.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Pose;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +21,7 @@ public class ClientEventHandler
     private static boolean wasCrawling = false, wasCrawlingToggle = false, crawlToggled = false;
 
     @SubscribeEvent
-    public static void keyPressEvent(net.minecraftforge.client.event.InputEvent.KeyInputEvent event)
+    public static void keyPressEvent(InputEvent event)
     {
         if(Minecraft.getInstance().player != null)
         {
